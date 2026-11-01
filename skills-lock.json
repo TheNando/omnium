@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "appwrite-cli": {
+      "source": "appwrite/skills",
+      "sourceType": "github",
+      "skillPath": "skills/appwrite-cli/SKILL.md",
+      "computedHash": "43ec313fcb0e99ee6d90d3a543964dcf015f12ebdcad5c4f6e2735ca999fa227"
+    },
+    "appwrite-go": {
+      "source": "appwrite/skills",
+      "sourceType": "github",
+      "skillPath": "skills/appwrite-go/SKILL.md",
+      "computedHash": "5653269712c1431c393150b59933ed93f3adc5211c9c22bef15d756cedcce3ce"
+    },
+    "appwrite-typescript": {
+      "source": "appwrite/skills",
+      "sourceType": "github",
+      "skillPath": "skills/appwrite-typescript/SKILL.md",
+      "computedHash": "4c628d0a5e79d4795df40b5f5cf4873e40cef44c20a48e35d26f52dbcdd48e0a"
+    }
+  }
+}
