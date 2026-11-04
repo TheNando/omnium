@@ -1,7 +1,11 @@
+import { roomCodeSchema } from "@omnium/schemas";
+import { Lobby } from "./Lobby.tsx";
 import { Menu } from "./Menu.tsx";
 
 export function App() {
-  const armies = new URLSearchParams(location.search).get("q");
+  const params = new URLSearchParams(location.search);
+  const armies = params.get("q");
+  const room = roomCodeSchema.safeParse(params.get("room") ?? "");
 
   if (armies) {
     return (
@@ -18,7 +22,7 @@ export function App() {
   return (
     <main class="titlePage backgroundTint">
       <img class="logo" src="/images/logo.png" alt="Shōgun" />
-      <Menu />
+      {room.success ? <Lobby code={room.data} /> : <Menu />}
     </main>
   );
 }

@@ -9,6 +9,10 @@
     "preview": "vp preview"
   },
   "dependencies": {
+    "@omnium/appwrite": "workspace:*",
+    "@omnium/query": "workspace:*",
+    "@omnium/schemas": "workspace:*",
+    "@tanstack/preact-query": "catalog:",
     "preact": "catalog:"
   },
   "devDependencies": {

@@ -1,0 +1,172 @@
+{
+  "projectId": "6ae7a0810019ddca5a94",
+  "endpoint": "http://192.168.1.200:3000/v1",
+  "tablesDB": [
+    {
+      "$id": "rooms",
+      "name": "rooms",
+      "enabled": true
+    }
+  ],
+  "tables": [
+    {
+      "$id": "rooms",
+      "databaseId": "rooms",
+      "name": "rooms",
+      "enabled": true,
+      "rowSecurity": false,
+      "$permissions": ["read(\"users\")"],
+      "columns": [
+        {
+          "key": "app",
+          "type": "varchar",
+          "size": 32,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "ownerId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "format": "enum",
+          "elements": ["lobby", "started"],
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "expiresAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "data",
+          "type": "varchar",
+          "size": 4000,
+          "required": false,
+          "array": false,
+          "default": "{}"
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_expiresAt",
+          "type": "key",
+          "columns": ["expiresAt"],
+          "orders": ["asc"]
+        }
+      ]
+    },
+    {
+      "$id": "members",
+      "databaseId": "rooms",
+      "name": "members",
+      "enabled": true,
+      "rowSecurity": false,
+      "$permissions": ["read(\"users\")"],
+      "columns": [
+        {
+          "key": "roomId",
+          "type": "varchar",
+          "size": 16,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "userId",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "name",
+          "type": "varchar",
+          "size": 64,
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "slot",
+          "type": "varchar",
+          "size": 32,
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "ready",
+          "type": "boolean",
+          "required": false,
+          "array": false,
+          "default": false
+        },
+        {
+          "key": "data",
+          "type": "varchar",
+          "size": 4000,
+          "required": false,
+          "array": false,
+          "default": "{}"
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_roomId",
+          "type": "key",
+          "columns": ["roomId"],
+          "orders": ["asc"]
+        },
+        {
+          "key": "unique_room_user",
+          "type": "unique",
+          "columns": ["roomId", "userId"],
+          "orders": ["asc", "asc"]
+        },
+        {
+          "key": "unique_room_slot",
+          "type": "unique",
+          "columns": ["roomId", "slot"],
+          "orders": ["asc", "asc"]
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "$id": "rooms",
+      "name": "rooms",
+      "runtime": "node-22",
+      "execute": ["users"],
+      "events": [],
+      "schedule": "",
+      "timeout": 15,
+      "enabled": true,
+      "logging": true,
+      "entrypoint": "main.mjs",
+      "commands": "",
+      "scopes": ["databases.read", "tables.read", "rows.read", "rows.write"],
+      "path": "functions/rooms/dist"
+    },
+    {
+      "$id": "rooms-cleanup",
+      "name": "rooms-cleanup",
+      "runtime": "node-22",
+      "execute": [],
+      "events": [],
+      "schedule": "0 * * * *",
+      "timeout": 60,
+      "enabled": true,
+      "logging": true,
+      "entrypoint": "main.mjs",
+      "commands": "",
+      "scopes": ["databases.read", "tables.read", "rows.read", "rows.write"],
+      "path": "functions/rooms-cleanup/dist"
+    }
+  ]
+}

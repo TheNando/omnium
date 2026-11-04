@@ -1,0 +1,21 @@
+{
+  "name": "@omnium/query",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@omnium/appwrite": "workspace:*",
+    "@omnium/schemas": "workspace:*",
+    "@tanstack/preact-query": "catalog:",
+    "preact": "catalog:"
+  },
+  "devDependencies": {
+    "vite-plus": "catalog:"
+  }
+}

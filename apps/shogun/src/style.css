@@ -105,3 +105,126 @@ body {
 .startButton:hover {
   background-color: #3488ce;
 }
+
+.startButton:disabled,
+.bannerButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.linkButton {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/** Menu and lobby */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(30rem, 90%);
+  margin: 1rem auto;
+  overflow-y: auto;
+  text-shadow: 2px 2px 2px black;
+}
+
+.label {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.textInput {
+  width: 100%;
+  padding: 0.6em 0.8em;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.codeInput {
+  width: 7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.error {
+  margin: 0;
+  color: #ff9b9b;
+}
+
+.roomCode {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.3em;
+}
+
+.bannerRow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.bannerRow .bannerButton {
+  max-height: 3.5rem;
+}
+
+.memberList {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+.memberBanner {
+  width: 5rem;
+  height: 1.75rem;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.memberBanner.spectator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 0.75rem;
+}
+
+.memberName {
+  flex: 1;
+}
+
+.readyTag {
+  font-size: 0.85rem;
+}
+
+.smallButton {
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+}
+
+.smallButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
