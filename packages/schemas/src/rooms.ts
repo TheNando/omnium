@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { armyShapeSchema } from "./shogun.ts";
 
 /** Appwrite ids shared by the client, the Functions and appwrite.config.json. */
 export const ROOMS_DATABASE_ID = "rooms";
@@ -95,6 +96,17 @@ export const roomActionSchema = z.discriminatedUnion("action", [
   }),
   z.object({ action: z.literal("start"), ...code }),
   z.object({ action: z.literal("delete"), ...code }),
+  // Shogun rounds.
+  z.object({
+    action: z.literal("lockBattle"),
+    from: armyShapeSchema,
+    defender: z.string(),
+    target: armyShapeSchema,
+    ...code,
+  }),
+  z.object({ action: z.literal("cancelBattle"), from: armyShapeSchema, ...code }),
+  z.object({ action: z.literal("finishOrders"), ...code }),
+  z.object({ action: z.literal("endBattle"), ...code }),
 ]);
 export type RoomAction = z.infer<typeof roomActionSchema>;
 

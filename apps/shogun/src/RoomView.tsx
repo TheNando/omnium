@@ -1,4 +1,6 @@
 import { APP_RULES, type Member, type Room, type RoomAction } from "@omnium/schemas";
+import { RoundStatus } from "./RoundStatus.tsx";
+import { readGame, roomUrl } from "./game.ts";
 
 const { slots, minSlotsToStart } = APP_RULES.shogun;
 
@@ -16,6 +18,7 @@ export function RoomView({ room, members, me, pending, error, run }: Props) {
   const code = room.$id;
   const isOwner = room.ownerId === me.userId;
   const inLobby = room.status === "lobby";
+  const game = readGame(room, members);
   const players = members.filter((member) => member.slot !== null);
   const canStart =
     isOwner &&
@@ -65,7 +68,15 @@ export function RoomView({ room, members, me, pending, error, run }: Props) {
           )}
         </>
       ) : (
-        <p class="label">The game has started.</p>
+        <>
+          <RoundStatus game={game} meId={me.userId} />
+          {me.slot && (
+            <a class="startButton linkButton" href={roomUrl(code, "combat")}>
+              Start Combat
+            </a>
+          )}
+          {!game.state && <p class="label">No army data for this game.</p>}
+        </>
       )}
 
       <p class="label">Players ({members.length})</p>

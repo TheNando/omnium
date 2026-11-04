@@ -16,7 +16,11 @@ export type MemberRow = { $id: string; userId: string; slot: string | null; read
 export type Failure = { ok: false; error: RoomErrorCode; message: string };
 export type Check<T = Record<never, never>> = ({ ok: true } & T) | Failure;
 
-const fail = (error: RoomErrorCode, message: string): Failure => ({ ok: false, error, message });
+export const fail = (error: RoomErrorCode, message: string): Failure => ({
+  ok: false,
+  error,
+  message,
+});
 
 export function isExpired(room: Pick<RoomRow, "expiresAt">, now: Date): boolean {
   return new Date(room.expiresAt).getTime() <= now.getTime();

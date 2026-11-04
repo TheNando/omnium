@@ -6,8 +6,12 @@ import {
   useRoomMembers,
   useRoomSubscription,
 } from "@omnium/query";
-import { playerNameSchema, type Room } from "@omnium/schemas";
+import { playerNameSchema, type Room, type RoomAction } from "@omnium/schemas";
+import { BattleBanner } from "./BattleBanner.tsx";
+import { BattlePage } from "./BattlePage.tsx";
+import { CombatPage } from "./CombatPage.tsx";
 import { RoomView } from "./RoomView.tsx";
+import { readGame, type View } from "./game.ts";
 
 const Message = ({ children }: { children: string }) => (
   <div class="panel">
@@ -19,7 +23,7 @@ const Message = ({ children }: { children: string }) => (
 );
 
 /** Loads a room, joins it if needed, and shows it live. */
-export function Lobby({ code }: { code: string }) {
+export function Lobby({ code, view }: { code: string; view: View }) {
   const user = useCurrentUser();
   const room = useRoom(code);
   const members = useRoomMembers(code);
@@ -84,14 +88,27 @@ export function Lobby({ code }: { code: string }) {
     );
   }
 
+  const page = {
+    room: room.data,
+    members: members.data,
+    me,
+    pending: action.isPending,
+    error: action.error?.message,
+    run: (next: RoomAction) => action.mutate(next),
+  };
+  const game = readGame(room.data, members.data);
+  const started = room.data.status === "started";
+
   return (
-    <RoomView
-      room={room.data}
-      members={members.data}
-      me={me}
-      pending={action.isPending}
-      error={action.error?.message}
-      run={(next) => action.mutate(next)}
-    />
+    <>
+      {started && <BattleBanner code={code} game={game} meId={me.userId} view={view} />}
+      {started && view === "combat" ? (
+        <CombatPage {...page} />
+      ) : started && view === "battle" ? (
+        <BattlePage {...page} />
+      ) : (
+        <RoomView {...page} />
+      )}
+    </>
   );
 }

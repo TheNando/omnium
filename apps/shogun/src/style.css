@@ -228,3 +228,300 @@ body {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/** Rounds and battles */
+
+.panel.wide {
+  width: min(70rem, 95%);
+  padding: 6px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.linkButton.smallButton {
+  text-decoration: none;
+}
+
+.roundStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: min(30rem, 100%);
+}
+
+.orderList {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: order;
+}
+
+.orderRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.2rem 0;
+}
+
+.orderRow::before {
+  content: counter(order);
+  counter-increment: order;
+  width: 1rem;
+  text-align: right;
+}
+
+.opponentRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.opponentRow .bannerButton {
+  max-width: 11rem;
+  max-height: 3rem;
+  margin: 0;
+}
+
+.lockNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+}
+
+.battleBanner {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0 0 8px 8px;
+  background-color: var(--strip);
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
+  animation: dropDown 0.4s ease-out;
+}
+
+.battleBanner.involved {
+  outline: 2px solid #fff;
+}
+
+@keyframes dropDown {
+  from {
+    transform: translate(-50%, -100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+/** Army cards */
+
+.army-red {
+  --unit: #a50a00;
+  --strip: #8f2a22;
+}
+
+.army-orange {
+  --unit: #d4650a;
+  --strip: #b8793f;
+}
+
+.army-green {
+  --unit: #2d8a1f;
+  --strip: #5f8f3a;
+}
+
+.army-blue {
+  --unit: #1b2fb0;
+  --strip: #3e5aa8;
+}
+
+.army-purple {
+  --unit: #7a2aa8;
+  --strip: #7d5aa0;
+}
+
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.cardColumn,
+.armyCardButton {
+  flex: 1 1 14rem;
+  max-width: 20rem;
+}
+
+.armyCardButton {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.armyCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0 0.6rem 0.8rem;
+  border-radius: 6px;
+  background: url("/images/board-parchment.webp") center / cover;
+  color: #2b2113;
+  text-shadow: none;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.armyCard.selected,
+.armyCardButton[aria-pressed="true"] .armyCard {
+  outline: 4px solid #fff;
+}
+
+.armySwath {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 -0.6rem;
+  padding: 0.8rem 1rem 1.6rem;
+  color: #fff;
+  text-shadow: 1px 1px 2px black;
+}
+
+.armySwath::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--strip);
+  mask: url("/images/board-swath.webp") center / 100% 100% no-repeat;
+}
+
+.armySymbol,
+.armyWatermark {
+  aspect-ratio: 252 / 198;
+  background-color: #fff;
+  mask-image: var(--symbol);
+  mask-size: 300% 100%;
+  mask-position: var(--x) 0;
+  mask-repeat: no-repeat;
+}
+
+.armySymbol {
+  width: 2.8rem;
+}
+
+.armyName {
+  flex: 1;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.armyLevel {
+  font-size: 0.85rem;
+}
+
+.levelBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.levelSpot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  aspect-ratio: 1;
+  background-color: rgba(43, 33, 19, 0.75);
+  color: #e8d9b0;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.levelSpot.circle {
+  border-radius: 50%;
+}
+
+.levelSpot.diamond {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.levelSpot.hexagon {
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+.levelSpot.current {
+  background-color: var(--unit);
+  color: #fff;
+}
+
+.armyGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  padding: 3px;
+  border: 2px solid rgba(43, 33, 19, 0.8);
+}
+
+.armyWatermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  background-color: var(--strip);
+  opacity: 0.2;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.gridSpot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border: 1px solid rgba(43, 33, 19, 0.45);
+}
+
+.gridSpot.empty {
+  color: rgba(43, 33, 19, 0.4);
+  font-size: 0.8rem;
+}
+
+.unitIcon {
+  width: 85%;
+  height: 85%;
+  background-color: var(--unit);
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.unitValue {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
