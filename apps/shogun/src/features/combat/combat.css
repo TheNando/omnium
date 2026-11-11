@@ -1,0 +1,52 @@
+.roundStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: min(30rem, 100%);
+}
+
+.orderList {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: order;
+}
+
+.orderRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.2rem 0;
+}
+
+.orderRow::before {
+  content: counter(order);
+  counter-increment: order;
+  width: 1rem;
+  text-align: right;
+}
+
+.opponentRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.opponentRow .bannerButton {
+  max-width: 11rem;
+  max-height: 3rem;
+  margin: 0;
+}
+
+.lockNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+}

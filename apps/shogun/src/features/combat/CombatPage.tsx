@@ -1,27 +1,14 @@
 import { useState } from "preact/hooks";
-import {
-  ARMY_NAMES,
-  ARMY_SHAPES,
-  type ArmyShape,
-  type Member,
-  type Room,
-  type RoomAction,
-} from "@omnium/schemas";
-import { ArmyCard } from "./ArmyCard.tsx";
+import { ARMY_NAMES, ARMY_SHAPES, type ArmyShape } from "@omnium/schemas";
+import { ArmyCard } from "@/features/armies";
+import type { RoomViewProps } from "@/features/room";
+import { findPlayer, lockFor, readGame, roomUrl } from "@/game";
+import { capitalize } from "@/shared/lib/text.ts";
 import { RoundStatus } from "./RoundStatus.tsx";
-import { capitalize, findPlayer, lockFor, readGame, roomUrl } from "./game.ts";
-
-type Props = {
-  room: Room;
-  members: Member[];
-  me: Member;
-  pending: boolean;
-  error?: string;
-  run: (action: RoomAction) => void;
-};
+import "./combat.css";
 
 /** Orders: pick one of your armies, an opponent and one of their armies, then lock the battle. */
-export function CombatPage({ room, members, me, pending, error, run }: Props) {
+export function CombatPage({ room, members, me, pending, error, run }: RoomViewProps) {
   const code = room.$id;
   const game = readGame(room, members);
   const { state } = game;

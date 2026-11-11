@@ -1,0 +1,29 @@
+.battleBanner {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0 0 8px 8px;
+  background-color: var(--strip);
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 1px 1px 2px black;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
+  animation: dropDown 0.4s ease-out;
+}
+
+.battleBanner.involved {
+  outline: 2px solid #fff;
+}
+
+@keyframes dropDown {
+  from {
+    transform: translate(-50%, -100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}

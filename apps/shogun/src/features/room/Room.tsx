@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import {
   useCurrentUser,
   useRoom,
@@ -6,32 +6,24 @@ import {
   useRoomMembers,
   useRoomSubscription,
 } from "@omnium/query";
-import { playerNameSchema, type Room, type RoomAction } from "@omnium/schemas";
-import { BattleBanner } from "./BattleBanner.tsx";
-import { BattlePage } from "./BattlePage.tsx";
-import { CombatPage } from "./CombatPage.tsx";
-import { RoomView } from "./RoomView.tsx";
-import { readGame, type View } from "./game.ts";
-
-const Message = ({ children }: { children: string }) => (
-  <div class="panel">
-    <p class="label">{children}</p>
-    <a class="startButton linkButton" href="/">
-      Back to menu
-    </a>
-  </div>
-);
+import type { Room as RoomData, RoomAction } from "@omnium/schemas";
+import { BattleBanner, BattlePage } from "@/features/battle";
+import { CombatPage } from "@/features/combat";
+import { readGame, type View } from "@/game";
+import { JoinForm } from "./JoinForm.tsx";
+import { RoomLobby } from "./RoomLobby.tsx";
+import { RoomMessage } from "./RoomMessage.tsx";
+import "./room.css";
 
 /** Loads a room, joins it if needed, and shows it live. */
-export function Lobby({ code, view }: { code: string; view: View }) {
+export function Room({ code, view }: { code: string; view: View }) {
   const user = useCurrentUser();
   const room = useRoom(code);
   const members = useRoomMembers(code);
   useRoomSubscription(code);
   const join = useRoomAction();
   const action = useRoomAction();
-  const [typedName, setTypedName] = useState("");
-  const lastRoom = useRef<Room | null>(null);
+  const lastRoom = useRef<RoomData | null>(null);
   const autoJoined = useRef(false);
 
   if (room.data) lastRoom.current = room.data;
@@ -48,44 +40,18 @@ export function Lobby({ code, view }: { code: string; view: View }) {
   }, [needsJoin, savedName, code, join]);
 
   if (user.isError || room.isError || members.isError) {
-    return <Message>Cannot reach the server. Try reloading.</Message>;
+    return <RoomMessage>Cannot reach the server. Try reloading.</RoomMessage>;
   }
   if (room.data === null) {
-    if (!lastRoom.current) return <Message>Room not found.</Message>;
+    if (!lastRoom.current) return <RoomMessage>Room not found.</RoomMessage>;
     const expired = new Date(lastRoom.current.expiresAt).getTime() <= Date.now();
-    return <Message>{expired ? "Room expired." : "Room closed by the owner."}</Message>;
+    return <RoomMessage>{expired ? "Room expired." : "Room closed by the owner."}</RoomMessage>;
   }
   if (!room.data || !members.data || !user.data) return <p class="panel label">Loading…</p>;
 
   if (!me) {
-    const name = playerNameSchema.safeParse(typedName);
     if (savedName && !join.isError) return <p class="panel label">Joining…</p>;
-    return (
-      <form
-        class="panel"
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (name.success) join.mutate({ action: "join", app: "shogun", code, name: name.data });
-        }}
-      >
-        <label class="label" for="playerName">
-          Enter your player name to join room {code}
-        </label>
-        <input
-          id="playerName"
-          class="textInput"
-          value={typedName}
-          maxLength={20}
-          autoFocus
-          autoComplete="off"
-          onInput={(event) => setTypedName(event.currentTarget.value)}
-        />
-        <button class="startButton" type="submit" disabled={!name.success || join.isPending}>
-          Join
-        </button>
-        {join.error && <p class="error">{join.error.message}</p>}
-      </form>
-    );
+    return <JoinForm code={code} join={join} />;
   }
 
   const page = {
@@ -107,7 +73,7 @@ export function Lobby({ code, view }: { code: string; view: View }) {
       ) : started && view === "battle" ? (
         <BattlePage {...page} />
       ) : (
-        <RoomView {...page} />
+        <RoomLobby {...page} />
       )}
     </>
   );

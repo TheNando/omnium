@@ -1,4 +1,4 @@
-import { findPlayer, type Game } from "./game.ts";
+import { findPlayer, type Game } from "@/game";
 
 /** Round number, phase, this round's player order and who has clicked Done. */
 export function RoundStatus({ game, meId }: { game: Game; meId: string }) {

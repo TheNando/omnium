@@ -12,6 +12,7 @@ import {
   type ShogunColor,
   type UnitCode,
 } from "@omnium/schemas";
+import "./armies.css";
 
 type Props = {
   color: ShogunColor;

@@ -1,0 +1,38 @@
+.roomCode {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.3em;
+}
+
+.bannerRow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.bannerRow .bannerButton {
+  max-height: 3.5rem;
+}
+
+.memberList {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+.memberName {
+  flex: 1;
+}
+
+.readyTag {
+  font-size: 0.85rem;
+}

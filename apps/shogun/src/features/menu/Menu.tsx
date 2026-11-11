@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { useCurrentUser, useRoomAction } from "@omnium/query";
 import { playerNameSchema, roomCodeSchema } from "@omnium/schemas";
+import "./menu.css";
 
 const goToRoom = (code: string) => location.assign(`?room=${code}`);
 

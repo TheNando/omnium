@@ -1,4 +1,7 @@
-import { capitalize, currentBattle, findPlayer, roomUrl, type Game, type View } from "./game.ts";
+import { currentBattle, findPlayer, roomUrl, type Game, type View } from "@/game";
+import { capitalize } from "@/shared/lib/text.ts";
+import "@/features/armies";
+import "./battle.css";
 
 /** Drops down from the top for as long as a battle is in progress. Click to join it. */
 export function BattleBanner({

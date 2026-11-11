@@ -20,8 +20,6 @@ export type Player = {
 
 export type Game = { state: GameState | undefined; players: Player[] };
 
-export type View = "room" | "combat" | "battle";
-
 const isColor = (slot: string): slot is ShogunColor =>
   SHOGUN_COLORS.some((color) => color === slot);
 
@@ -34,11 +32,6 @@ export function readGame(room: Room, members: Member[]): Game {
   );
   return { state: readGameState(room.data, members), players };
 }
-
-export const roomUrl = (code: string, view?: Exclude<View, "room">) =>
-  `/?room=${code}${view ? `&view=${view}` : ""}`;
-
-export const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 /** The battle in progress, if any: the first in the queue once orders are done. */
 export const currentBattle = (state: GameState | undefined): Battle | undefined =>

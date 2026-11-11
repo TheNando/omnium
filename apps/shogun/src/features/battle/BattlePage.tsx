@@ -1,18 +1,10 @@
-import type { Member, Room, RoomAction } from "@omnium/schemas";
-import { ArmyCard } from "./ArmyCard.tsx";
-import { currentBattle, findPlayer, readGame, roomUrl } from "./game.ts";
-
-type Props = {
-  room: Room;
-  members: Member[];
-  me: Member;
-  pending: boolean;
-  error?: string;
-  run: (action: RoomAction) => void;
-};
+import { ArmyCard } from "@/features/armies";
+import type { RoomViewProps } from "@/features/room";
+import { currentBattle, findPlayer, readGame, roomUrl } from "@/game";
+import "./battle.css";
 
 /** Placeholder battle page: shows both armies. Battle resolution comes later. */
-export function BattlePage({ room, members, me, pending, error, run }: Props) {
+export function BattlePage({ room, members, me, pending, error, run }: RoomViewProps) {
   const code = room.$id;
   const game = readGame(room, members);
   const battle = currentBattle(game.state);

@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, system-ui, sans-serif;
+  color: #fff;
+}
+
+.backgroundTint::before {
+  background-color: rgba(0, 0, 0, 0.25);
+  background-blend-mode: multiply;
+}
+
+.titlePage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.titlePage::before {
+  content: "";
+  position: absolute;
+  inset: -1rem;
+  z-index: -1;
+  background-image: url("/images/background.webp");
+  background-position: center;
+  background-size: cover;
+  filter: blur(5px);
+}
+
+.logo {
+  margin: 0 auto;
+  max-height: 15%;
+  max-width: 80%;
+  object-fit: contain;
+}

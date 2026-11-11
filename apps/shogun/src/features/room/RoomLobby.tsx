@@ -1,20 +1,12 @@
-import { APP_RULES, type Member, type Room, type RoomAction } from "@omnium/schemas";
-import { RoundStatus } from "./RoundStatus.tsx";
-import { readGame, roomUrl } from "./game.ts";
+import { APP_RULES } from "@omnium/schemas";
+import { RoundStatus } from "@/features/combat";
+import { readGame, roomUrl } from "@/game";
+import type { RoomViewProps } from "./types.ts";
 
 const { slots, minSlotsToStart } = APP_RULES.shogun;
 
-type Props = {
-  room: Room;
-  members: Member[];
-  me: Member;
-  pending: boolean;
-  error?: string;
-  run: (action: RoomAction) => void;
-};
-
 /** The lobby for a room the current user has joined. */
-export function RoomView({ room, members, me, pending, error, run }: Props) {
+export function RoomLobby({ room, members, me, pending, error, run }: RoomViewProps) {
   const code = room.$id;
   const isOwner = room.ownerId === me.userId;
   const inLobby = room.status === "lobby";
