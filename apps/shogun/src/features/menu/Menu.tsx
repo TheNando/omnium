@@ -1,13 +1,15 @@
 import { useState } from "preact/hooks";
+import { useLocation } from "preact-iso";
 import { useCurrentUser, useRoomAction } from "@omnium/query";
 import { playerNameSchema, roomCodeSchema } from "@omnium/schemas";
+import { roomUrl } from "@/game";
 import "./menu.css";
-
-const goToRoom = (code: string) => location.assign(`?room=${code}`);
 
 export function Menu() {
   const user = useCurrentUser();
   const action = useRoomAction();
+  const { route } = useLocation();
+  const goToRoom = (code: string) => route(roomUrl(code));
   const [typedName, setTypedName] = useState<string | null>(null);
   const [joining, setJoining] = useState(false);
   const [typedCode, setTypedCode] = useState("");

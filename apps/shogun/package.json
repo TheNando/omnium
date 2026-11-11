@@ -13,7 +13,8 @@
     "@omnium/query": "workspace:*",
     "@omnium/schemas": "workspace:*",
     "@tanstack/preact-query": "catalog:",
-    "preact": "catalog:"
+    "preact": "catalog:",
+    "preact-iso": "catalog:"
   },
   "devDependencies": {
     "@preact/preset-vite": "catalog:",
