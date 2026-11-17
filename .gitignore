@@ -79,6 +79,7 @@ bun.lockb
 *.db
 
 # Temporary files
+temp/
 *.tmp
 *.temp
 
